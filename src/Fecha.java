@@ -140,7 +140,6 @@ public class Fecha {
 		c = Y / 100;
 		d = dia;
 		m = (mes+9)%12 +1;
-		System.out.println(m);
 		
 		int w=(d + (int)(Math.floor(2.6*m - 0.2)) + y + (int)(Math.floor(y/4)) + (int)(Math.floor(c /4)) - 2*c)%7;
 		//w => 0= domingo,1= lunes... hay que sumarle 6, hacer el modulo y sumar 1 para 0=lunes, 1= martes
@@ -154,6 +153,11 @@ public class Fecha {
 	 * @param day
 	 */
 	public void setFecha(int year, int month, int day){
+		if(day > year){
+			int temp = day;
+			day = year;
+			year = temp;
+		}
 		if(!esFechaValida(year, month, day))
 			throw new IllegalArgumentException("dia, mes o año invalido");
 		else{
@@ -395,5 +399,34 @@ public class Fecha {
 		if(esFechaValida(anio-1, mes, dia-1)){
 			this.setFecha(anio-1, mes, dia-1);
 		}
+	}
+	
+	
+	public static void main(String args[]){
+		Fecha fecha1 = new Fecha ( 28 , 2 , 2012) ;
+		System.out.println(fecha1) ; // martes 28 Feb 2012
+		fecha1.siguienteDia();
+		System.out.println(fecha1); // mi´ercoles 29 Feb 2012
+		fecha1.siguienteDia();
+		System.out.println(fecha1); // jueves 1 Mar 2012
+		fecha1.siguienteMes();
+		System.out.println(fecha1); // domingo 1 Apr 2012
+		fecha1.siguienteAnio();
+		System.out.println(fecha1); // lunes 1 Apr 2013
+		
+		Fecha fecha2= new Fecha ( 2 , 1 , 2012) ;
+		System.out.println(fecha2); // lunes 2 Ene 2012
+		fecha2.anteriorDia();
+		System.out.println(fecha2); // domingo 1 Ene 2012
+		fecha2.anteriorDia();
+		System.out.println(fecha2) ; // s´abado 31 Dic 2011
+		fecha2.anteriorMes();
+		System.out.println(fecha2) ; // mi´ercoles 30 Nov 2011
+		fecha2.anteriorAnio();
+		System.out.println(fecha2) ; // martes 30 Nov 2010
+		
+		Fecha d3 = new Fecha (2012 , 2 , 29 ) ;
+		d3.anteriorAnio();
+		System.out.println (d3) ; // lunes 28 Feb 2011
 	}
 }
